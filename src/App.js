@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import { connect } from "react-redux";
+
+class App extends React.Component {
+  render() {
+    return (
+      <div>
+        <p>Age:<span style={{ color: "red" }}>{this.props.age}</span></p>
+        <br></br><br></br>
+        <button onClick={this.props.onAgeUp}>Age_up</button>
+        <button onClick={this.props.onAgeDown}>Age_Down</button>
+      </div>
+    )
+  }
+};
+
+
+//subsribe
+
+const receive = (state)=>{
+  return{
+    age:state.age
+  }
+
 }
 
-export default App;
+//dispatch
+
+const send = (dispatch) => {
+  return {
+    onAgeUp: () => { dispatch({ type: "AGE_UP", value: 1 }) },
+    onAgeDown: ()=> {dispatch({type : "AGE_DOWN", value:1})}
+  }
+}
+
+
+export default connect(receive,send) (App)
